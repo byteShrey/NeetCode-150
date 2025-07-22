@@ -1,0 +1,16 @@
+// Hashset - It does not take duplicates of elements 
+// We put everything in HashSet ,so it removes duplicates and check if the size of hashset is equal to size of our given array 
+// If they are same --> array does not contain any duplicates ,if the sizes differ , array had duplicate elements which got removed while putting in Hashset
+
+class Solution {
+    public boolean hasDuplicate(int[] nums) {
+        HashSet<Integer>set = new HashSet<>();
+        for(int i =0;i<nums.length;i++){
+            set.add(nums[i]);
+        }
+        if(nums.length>set.size()){
+            return true ;
+        }
+        return false ;
+    }
+}
