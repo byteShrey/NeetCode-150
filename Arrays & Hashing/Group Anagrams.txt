@@ -1,0 +1,20 @@
+// We make every string sorted and check if that string already exist in our map ,if so we add that string in arraylist of that map 
+// otherwise we just make a new key with that string 
+// this way end up storing the anagrams in a single list and we can make multiple lists as we keep getting different strings
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+
+        HashMap <String ,List<String>> Map = new HashMap<>();
+
+        for(String s: strs){
+            char[]charArray = s.toCharArray();
+            Arrays.sort(charArray);
+            String sortedS=new String (charArray);
+            Map.putIfAbsent(sortedS,new ArrayList<>());
+            Map.get(sortedS).add(s);
+        }
+
+        return new ArrayList<>(Map.values());
+    }
+}
