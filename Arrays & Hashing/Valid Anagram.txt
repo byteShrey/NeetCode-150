@@ -1,0 +1,18 @@
+// Make MapFrequency maps of each string and compare them :)
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+
+        HashMap<Character,Integer> s1 = new HashMap<>();
+        HashMap<Character,Integer> s2 = new HashMap<>();
+
+        for(char ch : s.toCharArray()){
+            s1.put(ch,s1.getOrDefault(ch,0)+1);
+        }
+         for(char ch : t.toCharArray()){
+            s2.put(ch,s2.getOrDefault(ch,0)+1);
+        }
+
+        return s1.equals(s2);
+    }
+}
