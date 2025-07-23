@@ -1,0 +1,30 @@
+// here we make a hashset of string 
+// as we traverse the board , we add a string corresponding to each position 
+// if the same string repeats in corresponding row or col in future , we return false otherwise we return true
+
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashSet<String> set = new HashSet<>();
+        for(int i=0 ;i<9 ;i++){
+            for(int j=0;j<9;j++){
+
+                if(board[i][j]=='.'){
+                    continue;
+                }
+
+                if(!set.add(board[i][j]+"in"+i+"row")){
+                    return false ;
+                }
+                
+                if(!set.add(board[i][j]+"in"+j+"col")){
+                    return false ;
+                }
+                if(!set.add(board[i][j]+"in"+i/3+"th and"+j/3+"th block")){
+                    return false ;
+                }
+            }
+        }
+        return true ;
+    }
+}
