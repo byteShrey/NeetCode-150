@@ -1,0 +1,31 @@
+// basic idea is putting numbers in hashset for constant access to check ,for every number in array , do we have a adjacent consecutive number ?
+// for that we put everything in hashset and keep checking for each element in array if we have any consecutive number of that number 
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> hs = new HashSet<>();
+        for (int n : nums) {
+            hs.add(n);
+        }
+
+        int longest = 0;
+
+        for (int nb : nums) {
+            // Only start counting if nb is the start of a sequence (no smaller number exists)
+            if (!hs.contains(nb - 1)) {
+                int currentNum = nb;
+                int currentLength = 1;
+
+                // Count consecutive numbers after currentNum
+                while (hs.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentLength++;
+                }
+
+                longest = Math.max(longest, currentLength);
+            }
+        }
+
+        return longest;
+    }
+}
