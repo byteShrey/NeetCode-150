@@ -1,0 +1,41 @@
+// we have to put some pattern while encoding the string and have to put the same pattern while decoding the string 
+
+class Solution {
+
+    public String encode(List<String> strs) {
+    
+    StringBuilder sb = new StringBuilder();
+    
+// while encoding we decided to make the string  xyz -> 3#xyz
+	
+    for(String ss :strs){
+        sb.append(ss.length()).append("#").append(ss);
+    }
+    return sb.toString();
+    }
+
+    public List<String> decode(String str) {
+        List<String> de = new ArrayList<>();
+
+        int i =0 ;
+        while(i<str.length()){
+
+	    // gives us the first occurance of #
+            int hash = str.indexOf("#",i);
+
+	    // we fetch the length of the string (it would be from i to #)
+            int len = Integer.parseInt(str.substring(i,hash));
+	    
+	    // we would move our i to hash+1 (starting of the string)	
+            i= hash+1;
+
+	    // and we make a substring 
+            String helper = str.substring(i,i+len);
+
+    	    // and add it to the our string list 
+            de.add(helper);
+            i=i+len;
+        }
+        return de ;
+    }
+}
