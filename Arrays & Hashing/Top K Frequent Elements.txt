@@ -1,0 +1,28 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+      // Make a frequency Map
+      HashMap<Integer,Integer> hm = new HashMap<>();
+      for(int n : nums){
+        hm.put(n,hm.getOrDefault(n,0)+1);
+      }
+      // make a priority queue which gives out the minimum frequency item from queue whenever we have more than k item in queue
+      PriorityQueue<Map.Entry<Integer, Integer>>pq= new PriorityQueue<>((a,b)->a.getValue()-b.getValue());
+    
+        // keep inserting in queue k elements , if we are exceeding k elements , poll the queue to give out element with minimum frequency 
+      for(Map.Entry<Integer,Integer> entry:hm.entrySet()){
+        pq.offer(entry);
+        if(pq.size()>k){
+            pq.poll();
+        }
+      }
+
+    // now empty the queue in an array and print the result 
+      int [] res = new int [k];
+      int i=0;
+      while(!pq.isEmpty()){
+        res[i++]=pq.poll().getKey();
+      }   
+
+      return res;
+    }
+}
