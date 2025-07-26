@@ -1,0 +1,20 @@
+class Solution {
+    public int maxArea(int[] heights) {
+        int max = 0 ;
+        for(int i=0 ; i <heights.length ;i++){
+            int curr=0;
+            // we get the height of current 
+            int iii = heights[i];
+            for(int j=i+1 ;j<heights.length ;j++){
+                // volume of water would be Minimum height and width between i and j
+                 curr = Math.min(iii,heights[j])*(j-i);
+                // we update the curr
+                if(curr>max){
+                max= curr;
+                }
+            }
+            
+        }
+        return max ;
+    }
+}
