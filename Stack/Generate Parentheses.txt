@@ -1,0 +1,27 @@
+class Solution {
+    // we are creating a function which takes a list , max is the number of opening or closing baraces we can add , 
+    // number of opening braces we can add ,number of closing braces we can add
+    // and a string which is already formed till now 
+    public void generate (List<String> result ,int max ,int open ,int close ,String unpro){
+        // base condition for recursion is to see if number of opening plus 
+        // number of closing baraces equals 2 times max 
+        if(unpro.length()==(2*max)){
+            // we will add the string to the arrayList
+            result.add(unpro);
+            return ;
+        }
+        if(open<max){
+            generate(result ,max ,open+1,close,unpro +'(');
+        }
+        if(close<open){
+            generate(result ,max ,open,close+1,unpro +')');
+        }
+    }
+
+
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<String>();
+        generate(result ,n ,0,0,"");
+        return result ;
+    }
+}

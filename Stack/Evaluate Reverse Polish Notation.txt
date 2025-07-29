@@ -1,0 +1,29 @@
+class Solution {
+    public int evalRPN(String[] tokens) {
+        // its like postfix order 
+        // you just have to push all the numbers to the stack 
+        // and you find any operand just pop first two numbers and
+        // do that operation otherwise push that number 
+        // return the popped element at last
+        // create a stack 
+         Stack<Integer> stack = new Stack<>();
+
+        for (String token : tokens) {
+            if ("+-*/".contains(token)) { // Check if the token is an operator
+                int b = stack.pop();
+                int a = stack.pop();
+                switch (token) {
+                    case "+" -> stack.push(a + b);
+                    case "-" -> stack.push(a - b);
+                    case "*" -> stack.push(a * b);
+                    case "/" -> stack.push(a / b);
+                }
+            } else {
+                stack.push(Integer.parseInt(token)); // Parse and push the number
+            }
+        }
+
+        return stack.pop(); // Final result
+       
+    }
+}

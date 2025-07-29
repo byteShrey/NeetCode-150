@@ -1,0 +1,24 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack<Integer> stack = new Stack<>();
+        int maxArea = 0;
+
+        // Iterate through the histogram
+        for (int i = 0; i <= n; i++) {
+            // Add a zero height at the end to process all bars
+            int h = (i == n) ? 0 : heights[i];
+
+            // While stack is not empty and the current height is less than the height at stack's top
+            while (!stack.isEmpty() && h < heights[stack.peek()]) {
+                int height = heights[stack.pop()]; // Pop the top
+                int width = stack.isEmpty() ? i : i - stack.peek() - 1; // Calculate width
+                maxArea = Math.max(maxArea, height * width); // Update max area
+            }
+
+            stack.push(i); // Push the current index
+        }
+
+        return maxArea;
+    }
+}
