@@ -1,0 +1,54 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        /**
+        basic template of this problem looks like :
+
+        1)if you find the element at middle you just return 
+        2)if the left part of the array is sorted 
+                    and if the element lie in left half 
+                        we reduce our search space 
+                            otherwise we search in right array 
+        3) if the right array is sorted 
+                    and if the elemenet is there in right array 
+                         we reduce the search space and seach 
+                            otherwise we go into left array 
+        **/
+
+        int low =0;
+        int high = nums.length-1;
+
+        while(low<=high){
+            int mid = low +(high-low)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+
+            // left half is sorted 
+            if(nums[low]<=nums[mid]){
+                // if the element is there is left part
+                if(nums[low]<= target && target<=nums[mid]){
+                    high= mid-1;
+                }
+                // if the target is not there in left half then go to right half 
+                else{
+                    low=mid+1;
+                }
+
+            }
+            // means right array is sorted
+            else{
+                //if the target is in there in right part of array
+                if(nums[mid]<=target && target<=nums[high]){
+                    //we keep cheking the right part
+                    low=mid+1;
+                }else{
+                    // we look in left part 
+                    high=mid-1;
+                }
+                
+            }    
+        }
+        // if we  dont find the element in array we return -1;
+        return -1;
+    }
+}

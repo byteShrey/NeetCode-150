@@ -1,0 +1,32 @@
+class TimeMap {
+    HashMap< String ,TreeMap<Integer,String> > map;
+    public TimeMap() {
+        // we make treeMap because we want our "keys" to be sorted 
+        map = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+
+        map.putIfAbsent(key,new TreeMap<>());
+        map.get(key).put(timestamp,value);        
+    }
+    
+    /*
+    If the key doesn't exist → return ""
+    If there’s no floor key (i.e., no earlier or same timestamp) → return ""
+    Else, return the value at the closest earlier timestamp.
+    */
+    public String get(String key, int timestamp) {
+        if (!map.containsKey(key)) {
+        return "";
+    }
+    TreeMap<Integer, String> tee = map.get(key);
+    // flooring of key is because , if we dont have any timestamp with given time ,
+    // we have to return nearest smaller timestamp , that is also the reason why we are storing 
+    // in treeMap
+    Integer floor = tee.floorKey(timestamp);
+    return floor == null ? "" : tee.get(floor);
+       
+        
+    }
+}

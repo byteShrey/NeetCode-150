@@ -1,0 +1,22 @@
+class Solution {
+    public int findMin(int[] nums) {
+      int low = 0;
+      int high = nums.length-1;
+    
+      while (low<high){
+        int mid = low +( high - low )/2;
+        // if the middle element is greater than last element 
+        // it means the starting of sorted array is at right 
+        // smallest element is at right 
+        if(nums[mid]>nums[high]){
+            low= mid+1;
+
+        }else{
+            // otherwise we will search in first part of array 
+            high=mid;
+        }
+      }  
+      // we will return the low because we want the lowest element
+      return nums[low] ;
+    }
+}

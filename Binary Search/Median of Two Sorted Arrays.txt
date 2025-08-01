@@ -1,0 +1,75 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+         // intusion is to divide the array in symmetry
+        /**
+        first we want select the smaller array to perform binary search on it
+        so that we can figure out how much elements will be on left side 
+        and how much will be on the right side of the symmetry
+
+        now we are gonna figure out till what place we are gonna include the 
+        elements in first array(mid1) and till what place we gonna include
+        the elements in second array (mid2)
+
+        when we figure out mid1 we will get mid2 
+
+        after that we find the point where we divide the array 
+        1)we mark the last element of first array as l1
+        2)last element of second array as l2
+
+        3)we mark the starting of the right array from first array 
+        4)we mark the starting of the right array from second array
+
+        we just make sure that l1<=r2 and l2<=r1 cross checks 
+
+        if it is the we have 2 cases 1) odd number of elements , we take max(l1,l2)
+                                     2) even number of elements, we take mean of {max(l1,l3) ,min(r1,r2)}
+
+        and if we see we have'nt really find the point yet 
+        means that array is not divided correcly and we need to fix
+        and we cross check to check the sorted order 
+        ///key - left arrays will be small elements
+                right arrays will be bigger elements
+        
+        */
+        
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        // if first array is not smaller we swap the arrays 
+        if (n1 > n2) return findMedianSortedArrays(nums2, nums1); // Ensure nums1 is the smaller array
+        
+        int low = 0;
+        int high = n1;// as we are finding the partitions 
+
+        while (low <= high) {
+            // middle of the first array 
+            int mid1 = (low + high) / 2;
+            // middle of the right array
+            int mid2 = (n1 + n2 + 1) / 2 - mid1;
+
+            // l1 is ending of the first array in left side of symmetry 
+            int l1 = (mid1 == 0) ? Integer.MIN_VALUE : nums1[mid1 - 1];
+            //l2 is the ending of the second array in left side of symmetry
+            int l2 = (mid2 == 0) ? Integer.MIN_VALUE : nums2[mid2 - 1];
+
+            // r1 is the starting of the first array in right side
+            int r1 = (mid1 == n1) ? Integer.MAX_VALUE : nums1[mid1];
+            //r2 is the starting of the second array in right side
+            int r2 = (mid2 == n2) ? Integer.MAX_VALUE : nums2[mid2];
+
+            // if the partition is correct 
+            if (l1 <= r2 && l2 <= r1) {
+                if ((n1 + n2) % 2 == 1) return Math.max(l1, l2);
+                return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
+            }// if the partition is not correct and l2>r2 means we have taken some excessive part of 
+            // first array so we reduce the mid1 
+            else if (l1 > r2) {
+                high = mid1 - 1;
+            }// if we have taken less part of first array we increase the mid1 
+            else {
+                low = mid1 + 1;
+            }
+        }
+        //dummy return 
+        return 0.0;
+    }
+}

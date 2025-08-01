@@ -1,0 +1,42 @@
+// intuition here is 
+// we would first find the pile with maximum banana 
+// suppose we have max banana in one pile is 9
+// so we would search for 0 to 9 
+// speed varies from 0 banana/ hr to 9 banana per hour 
+// we are finding the number of hours for each of this speed 
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+    // maximum banana in pile in given array , that would be the maximum koko can eat in hour
+    int max = Arrays.stream(piles).max().getAsInt();
+    // for binary search we set the indices 
+    int low =1;
+    int high = max;
+    // we start the ans by keeping max value as of now 
+    int ans= max;
+   
+    while(low<=high){
+        
+        int hours =0 ;
+        int mid = low +(high-low)/2;
+
+
+        for(int banana : piles){
+        // we take the ceiling of the number we get after dividing by mid 
+        // we take ceiling because even if we koko finishes a pile in 2.33 hrs 
+        // it would still be considered as 3 hrs 
+        // koko cant go to next pile and start eating 
+            hours += (int) Math.ceil((double) banana / mid);
+        }
+        
+        if(hours<=h){
+            ans= mid;
+            high=mid-1;
+        }
+        else{
+            low=mid+1;
+        }
+    }
+    return ans ;
+    }
+}
