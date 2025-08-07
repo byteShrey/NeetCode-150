@@ -1,0 +1,48 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        if (s.length() < t.length()) return "";
+
+        int[] freq = new int[128]; // For all ASCII chars
+        for (char c : t.toCharArray()) {
+            freq[c]++;
+        }
+
+        int left = 0, right = 0;
+        int count = t.length(); // Total characters we need to match
+        int minLen = Integer.MAX_VALUE;
+        int start = 0; // Start index of the min window
+
+        while (right < s.length()) {
+            char rChar = s.charAt(right);
+
+            // If character is needed, reduce count
+            if (freq[rChar] > 0) {
+                count--;
+            }
+            freq[rChar]--; // Reduce freq in all cases
+            right++;
+
+            // When all characters are matched
+            while (count == 0) {
+                // Update minimum window
+                //we shrink the window here 
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    start = left;
+                }
+                // after shrinking window , we reduce the frequency of left char that we just kept out of window
+                char lChar = s.charAt(left);
+                freq[lChar]++;
+
+                // If character is now needed again (i.e., went from ≤ 0 to > 0)
+                if (freq[lChar] > 0) {
+                    count++;
+                }
+
+                left++; // Shrink window
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+}

@@ -1,0 +1,31 @@
+class Solution {
+    // if we have 9 number of characters in given window 
+    // and we have maximum of the charcters are "y"say 5 charcters out of 9 are y 
+    // so we need to replacfe 9-5 =4 chacters to make the window look completely "y"
+    // so condition would be windowSize - maxFreqChar > k -->> then we slide the window 
+    // otherwise we increase the window and increase the longest string 
+    public int characterReplacement(String s, int k) {
+        int n = s.length();
+        int i=0; 
+        int j=0;
+        int maxLen = 0;
+        int maxFreq=0;
+        int [] freq = new int[26];
+            while(j<n){
+                freq[s.charAt(j) - 'A']++;
+                maxFreq= Math.max(maxFreq,freq[s.charAt(j) - 'A']);
+
+                // we put in the condition and reduce the window
+                if((j-i+1)-maxFreq >k){
+                    freq[s.charAt(i) - 'A']--;
+                    i++;
+                }
+
+                //otherwise we add the char in 
+                maxLen = Math.max(maxLen, j - i + 1);
+                j++;
+            }
+            return maxLen;
+        }
+    }
+

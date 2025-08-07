@@ -1,0 +1,15 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+    
+    // we just have to maintain two variables here 
+
+    int max =0 ;
+    int minstock=prices[0];
+    for(int i=0 ;i<prices.length;i++){
+        minstock = Math.min(minstock ,prices[i]);
+        int curr = prices[i]- minstock;
+        max = Math.max(curr,max);
+    }
+    return max;
+    }
+}
