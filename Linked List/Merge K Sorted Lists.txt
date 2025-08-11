@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode temp1 = list1;
+        ListNode temp2 = list2;
+
+        ListNode dummy = new ListNode (0);
+        ListNode temp = dummy ;
+
+        while(temp1!=null && temp2!=null){
+
+        if(temp1.val<temp2.val){
+            temp.next= temp1;
+            temp= temp1;
+            temp1= temp1.next;
+        }
+        else{
+            temp.next=temp2;
+            temp= temp2;
+            temp2= temp2.next;
+        }
+        
+        }
+        if(temp1==null){
+            temp.next= temp2;
+        }
+        else{
+            temp.next= temp1;
+        }
+        return dummy.next;
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        
+    // we are taking help of the function to merge two lists
+
+    // we will cheak how many lists we have 
+    int k= lists.length;
+    // now as we are merging two lists at a time then we have to merge 
+    //  first two lists in first list 
+    //  third and forth list in third list 
+    // fifth and 6th list in fifth list 
+    // like this 
+
+    // so we will some intervals before we get the final list 
+    // we will keep the count of that intervals starting from 1 
+    int interval = 1 ;
+    // till our interval value is less than length of list
+    // we will keep merging two lists
+    //  and we will increment the lists by interval = interval + interval*2
+    while(interval<k){
+        for( int i=0 ; i+interval<k ; i += interval * 2){
+            // we are merging two lists 
+            lists[i]=mergeTwoLists(lists[i] ,lists[i+interval]);
+        }
+        // we are incrementing the interval 
+        interval*=2;
+    }
+    // return null if the list is empty  otherwise return first list
+    // which will be the merged list of all lists
+    return lists.length==0 ? null : lists[0];
+    }
+}

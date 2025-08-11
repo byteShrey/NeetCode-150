@@ -1,0 +1,24 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow =0;
+        int fast=0;
+        slow=nums[slow];
+        fast= nums[nums[fast]];
+
+        // Point of intersetion of fast and slow pointer
+        while(slow!=fast){
+            slow=nums[slow];
+            fast= nums[nums[fast]];
+        }
+
+        // new pointer starting from 0
+        int P = 0;
+        //find intersetion point of new pointer and point of intersection of slow and fast pointer
+        while(slow!=P){
+            P=nums[P];
+            slow= nums[slow];
+        }
+
+        return slow;
+    }
+}

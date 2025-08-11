@@ -1,0 +1,77 @@
+class LRUCache {
+    class Node {
+	    int value ;
+        int key;
+	    Node next ,prev ;
+	    Node (int key , int value){
+	        this.key = key ;
+	        this.value= value;
+		}	
+	}
+    Map<Integer,Node> hm ;
+    Node head ;
+    Node tail ;
+    int capacity ;
+    int size;
+    
+
+    public LRUCache(int capacity) {
+        hm = new HashMap<>();
+        this.head = new Node(0,0);
+	    this.tail= new Node(0,0);
+	    head.next= tail;
+	    head.prev= tail;
+	    tail.next= head;
+	    tail.prev= head;
+	    this.capacity = capacity ;
+	    this.size=size;
+    }
+    
+    public int get(int key) {
+        if(hm.get(key)!=null){
+		    Node temp = hm.get(key);
+		    int val= temp.value;
+		    remove(temp);
+		    insertInFront(temp);
+		    return val;
+	}
+	    else{
+		    return -1;
+	    }      
+    }
+    
+    public void put(int key, int value) {
+        if(hm.get(key)!=null){
+	        Node temp = hm.get(key);
+	        temp.value= value;
+	        hm.put(key,temp);
+	        remove(temp);
+	        insertInFront(temp);
+	    }
+        else{
+	        Node x = new Node (key,value);
+	        hm.put(key,x);
+
+	        if(size<capacity){
+		        size++;
+		        insertInFront(x);
+	        }
+	        else{
+		        hm.remove(tail.prev.key);
+		        remove(tail.prev);
+		        insertInFront(x);
+	        }
+        }
+    }
+
+    public void remove (Node n){
+	    n.prev.next= n.next;
+	    n.next.prev= n.prev;
+    }
+    public void insertInFront(Node n){
+	    n.next= head.next;
+	    n.next.prev= n;
+	    head.next= n;
+	    n.prev= head;
+    }
+}
