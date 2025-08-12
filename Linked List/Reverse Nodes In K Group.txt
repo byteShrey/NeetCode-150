@@ -11,39 +11,28 @@
 
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || k == 1) {
-            return head; // No reversal needed for k=1 or empty list
-        }
-
-        // Check if there are at least k nodes to reverse
-        ListNode curr = head;
-        int count = 0;
-        while (curr != null && count < k) {
-            curr = curr.next;
+        ListNode temp = head ;
+        int count =0;
+        while(count<k){
+            if(temp==null){
+                return head ;
+            }
+            temp=temp.next;
             count++;
         }
 
-        // If there are at least k nodes, reverse them
-        if (count == k) {
-            ListNode prev = null;
-            ListNode next = null;
-            curr = head; // Reset curr to the start of the group
-            int c = 0;
+        ListNode prevNode = reverseKGroup(temp,k);
 
-            while (c < k && curr != null) {
-                next = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = next;
-                c++;
-            }
-
-            // After reversal, connect the remaining part of the list
-            head.next = reverseKGroup(curr, k);
-            return prev; // Return the new head after reversal
+        temp= head;
+        count =0;
+        while(count<k){
+            ListNode next= temp.next;
+            temp.next= prevNode;
+            prevNode= temp;
+            temp=next;
+            count++; 
         }
 
-        // If fewer than k nodes, return head as-is
-        return head;
+        return prevNode;
     }
 }
