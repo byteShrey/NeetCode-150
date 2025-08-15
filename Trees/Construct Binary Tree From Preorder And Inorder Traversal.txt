@@ -1,0 +1,69 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    // this is used to take a root everytime 
+    int preOrderIndex;
+    // hashmap of inorder traversal 
+    Map<Integer,Integer> InOrderMap= new HashMap<>() ;
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        preOrderIndex = 0 ;
+        // Map the nodes and their indices in Map
+        for(int i=0;i<inorder.length;i++){
+            InOrderMap.put(inorder[i],i);
+        }
+        int leftOfInOrder =0;
+        int rightOfInOrder= inorder.length-1;
+        TreeNode answer = helper(preorder ,leftOfInOrder,rightOfInOrder);
+        return answer;
+    }
+
+    public TreeNode helper(int[]pre,int left,int right){
+        if(left>right){
+            return null ;
+        }
+
+        // now decide the root 
+        int rootNow = pre[preOrderIndex];
+        preOrderIndex++;
+
+        //make a new tree
+        TreeNode roooot = new TreeNode(rootNow);
+        
+        //split the left part of the root and right part of the root
+        roooot.left=helper(pre,left,InOrderMap.get(rootNow)-1);
+        roooot.right=helper(pre,InOrderMap.get(rootNow)+1,right);
+
+        return roooot;
+    }
+}

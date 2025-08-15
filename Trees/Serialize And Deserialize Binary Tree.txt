@@ -1,0 +1,88 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        // if the tree is empty we just return empty string 
+        if(root==null) return "";
+
+        // we make a new stringbuilder and queue
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> que= new LinkedList<>();
+
+        // process is 1) deque
+        //            2) print ( val or n if null )
+        //            3) add its left and right 
+
+        // we start by puting the Root 
+        que.add(root);
+
+        // till queue is not empty we just continue
+        while(!que.isEmpty()){
+        // 1)deque 
+           TreeNode node =que.poll();
+        // 2)print 
+           if(node==null){
+            sb.append("n ");
+            continue;
+           }
+           sb.append(node.val+" ");
+
+        // add neighbours
+           que.add(node.left);
+           que.add(node.right);
+        }
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        // if the given string is empty our tree is null 
+        if(data.equals(""))return null ;
+
+        // make a queue and array of strings
+        Queue<TreeNode> Q = new LinkedList<>();
+        String [] StringArray = data.split(" ");
+
+        // our root will be the first element of the array
+        TreeNode rt = new TreeNode(Integer.parseInt(StringArray[0]));
+
+        // we add the root 
+        Q.add(rt);
+
+
+        // We traverse the string array and keep joining the nodes in tree
+        for(int i=1 ;i<StringArray.length;i++){
+            TreeNode temp = Q.poll(); 
+
+            // put the next element in left subtree
+            if(!StringArray[i].equals("n")){
+                TreeNode left = new TreeNode(Integer.parseInt(StringArray[i]));
+                temp.left = left;
+                Q.add(left);
+            }
+            // put the next element in right subtree
+            if(!StringArray[++i].equals("n")){
+                TreeNode right = new TreeNode(Integer.parseInt(StringArray[i]));
+                temp.right = right;
+                Q.add(right);
+            }
+        }
+    return rt;
+    }
+}

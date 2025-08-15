@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    public int goodNodes(TreeNode root) {
+      // whever we are trying to build the solution think of the three nodes only 
+      // if you could manage to think of the solution for thr tree with 3 nodes ,you are almost there
+      // you can anytime use recursion over the whole tree and get the solution for the whole tree
+
+      return helper (root,Integer.MIN_VALUE);  
+    }
+    public int helper (TreeNode root ,int currM){
+        // Step1 :handle if the root is null we have 0 goof nodes
+        if(root==null) return 0;
+
+        // Step2 : before moving 
+        int rootAns = 0;
+        if(currM <= root.val){
+            currM = root.val;
+            rootAns=1;
+        }
+        // Step3 : use recursion on left as well as right subtree to check the number of good nodes
+        // in right and left subtree
+        int leftAns = helper(root.right,currM);
+        int rightAns= helper(root.left ,currM);
+
+        // return total number of nodes 
+        return rootAns+leftAns+rightAns;
+    }
+}

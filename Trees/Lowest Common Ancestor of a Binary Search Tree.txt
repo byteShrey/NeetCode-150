@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //the point we find the nodes split its the LCA 
+
+        // if given root is null we just return null 
+        if(root==null) return null ;
+        // for moving to left or right we need to have value of root
+        int current = root.val ;
+
+        // if both the nodes are on left we go left and do same thing
+        if(current<p.val && current<q.val){
+            return lowestCommonAncestor(root.right ,p,q);
+        }
+        //if both nodes are on right we go right
+        if(current>p.val && current>q.val){
+            return lowestCommonAncestor(root.left,p,q);
+        }
+        // if neither of it works we return root
+        return root ;
+    }
+}
